@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BLE拉距测试</string>
+    <string name="notification_channel_monitor">BLE拉距测试监控</string>
+    <string name="notification_channel_alarm">断连报警</string>
+    <string name="notification_monitor_title">BLE拉距测试进行中</string>
+    <string name="notification_monitor_text">正在监控设备连接状态</string>
+    <string name="notification_alarm_title">⚠ 设备已断连</string>
+    <string name="notification_alarm_text">BLE 连接已断开，请检查设备</string>
+</resources>
