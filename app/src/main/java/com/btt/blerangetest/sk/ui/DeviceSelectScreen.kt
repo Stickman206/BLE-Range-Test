@@ -360,7 +360,7 @@ fun DeviceSelectScreen() {
                     Text("开发者：Stickman", style = MaterialTheme.typography.bodyMedium)
                     Spacer(Modifier.height(4.dp))
                     Text(
-                        "GitHub：https://github.com/Stickman",
+                        "GitHub：https://github.com/Stickman206",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.primary
                     )
