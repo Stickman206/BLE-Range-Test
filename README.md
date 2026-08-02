@@ -112,7 +112,9 @@ app/src/main/java/com/btt/blerangetest/sk/
 
 ## License
 
-本项目仅供学习与测试使用。
+[MIT License](LICENSE) — Copyright (c) 2026 **Stickman**
+
+本项目采用 MIT 协议开源，允许自由使用、修改与再分发（含商用），需保留版权声明。
 
 ## 作者
 
