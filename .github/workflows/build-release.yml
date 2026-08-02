@@ -29,6 +29,10 @@ jobs:
       - name: Setup Gradle cache
         uses: gradle/actions/setup-gradle@v4
 
+      # Windows 上提交会丢失 +x 执行位，恢复后可执行权限
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
       - name: Build debug APK
         run: ./gradlew assembleDebug
 
