@@ -201,35 +201,35 @@ fun DeviceSelectScreen() {
         }
         Spacer(Modifier.height(12.dp))
 
-        // ---- 已配对设备（独立区块） ----
-        var bondedDevices by remember { mutableStateOf(BleMonitorService.getBondedDevices(context)) }
+        // ---- 当前已连接设备（独立区块） ----
+        var connectedDevices by remember { mutableStateOf(BleMonitorService.getConnectedDevices(context)) }
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                "已配对设备",
+                "当前已连接设备",
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.weight(1f)
             )
             IconButton(
                 onClick = {
-                    bondedDevices = BleMonitorService.getBondedDevices(context)
+                    connectedDevices = BleMonitorService.getConnectedDevices(context)
                 }
             ) {
                 Icon(
                     Icons.Filled.Refresh,
-                    contentDescription = "刷新已配对设备",
+                    contentDescription = "刷新已连接设备",
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.width(18.dp).height(18.dp)
                 )
             }
         }
         Spacer(Modifier.height(6.dp))
-        if (bondedDevices.isEmpty()) {
+        if (connectedDevices.isEmpty()) {
             Text(
-                "暂无已配对设备（可在系统蓝牙设置中配对后刷新）",
+                "暂无已连接设备（当前没有正在连接的 BLE 设备）",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -237,8 +237,8 @@ fun DeviceSelectScreen() {
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(bondedDevices, key = { it.address }) { device ->
-                    BondedDeviceCard(device = device, onClick = {
+                items(connectedDevices, key = { it.address }) { device ->
+                    ConnectedDeviceCard(device = device, onClick = {
                         BleMonitorService.startTest(context, device)
                     })
                 }
@@ -415,9 +415,9 @@ private fun DeviceCard(device: BleDevice, onClick: () -> Unit) {
     }
 }
 
-/** 已配对设备卡片（横向区块，无 RSSI 值，显示"已配对"标记） */
+/** 当前已连接设备卡片（横向区块，无 RSSI 值，显示"已连接"标记） */
 @Composable
-private fun BondedDeviceCard(device: BleDevice, onClick: () -> Unit) {
+private fun ConnectedDeviceCard(device: BleDevice, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .width(200.dp)
@@ -450,7 +450,7 @@ private fun BondedDeviceCard(device: BleDevice, onClick: () -> Unit) {
                 )
             }
             Text(
-                text = "配对",
+                text = "已连接",
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.secondary,
                 fontWeight = FontWeight.Bold

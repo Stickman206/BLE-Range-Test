@@ -448,10 +448,10 @@ class BleMonitorService : LifecycleService() {
             sessionSummary.value = null
         }
 
-        /** 查询手机系统已配对设备（供设备选择页展示独立区块） */
-        fun getBondedDevices(context: Context): List<BleDevice> {
+        /** 查询当前正在连接的 BLE 设备（供设备选择页展示独立区块） */
+        fun getConnectedDevices(context: Context): List<BleDevice> {
             val mgr = instance?.let { it.bleManager } ?: BleManager(context)
-            return mgr.getBondedDevices()
+            return mgr.getConnectedDevices()
         }
 
         // ---- UI 调用入口 ----

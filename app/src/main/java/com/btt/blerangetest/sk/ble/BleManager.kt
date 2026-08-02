@@ -133,25 +133,18 @@ class BleManager(private val context: Context) {
 
     var onScanFailed: ((Int) -> Unit)? = null
 
-    // ---- 已配对设备 ----
+    // ---- 当前已连接设备 ----
 
     /**
-     * 读取手机系统已配对的 BLE 设备（独立于扫描结果）。
+     * 读取当前正在连接的 BLE 设备（活跃 GATT 连接，非历史配对记录）。
      * API 31+ 需要 BLUETOOTH_CONNECT 权限，权限缺失时返回空列表。
      */
-    fun getBondedDevices(): List<BleDevice> {
+    fun getConnectedDevices(): List<BleDevice> {
         if (!hasConnectPermission()) return emptyList()
-        val bonded = adapter?.bondedDevices ?: return emptyList()
-        return bonded
-            .filter { it.type == BluetoothDevice.DEVICE_TYPE_LE || it.type == BluetoothDevice.DEVICE_TYPE_DUAL }
+        return bluetoothManager
+            .getConnectedDevices(BluetoothProfile.GATT)
             .map { BleDevice(it.name, it.address, Int.MIN_VALUE) }
             .sortedBy { it.name ?: it.address }
-    }
-
-    /** 检查某个 MAC 是否是已配对设备 */
-    fun isBonded(address: String): Boolean {
-        if (!hasConnectPermission()) return false
-        return adapter?.bondedDevices?.any { it.address.equals(address, ignoreCase = true) } == true
     }
 
     fun stopScan() {
